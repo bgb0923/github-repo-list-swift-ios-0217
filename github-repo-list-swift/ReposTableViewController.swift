@@ -13,13 +13,26 @@ class ReposTableViewController: UITableViewController {
     var store = ReposDataStore.sharedInstance
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.tableView.accessibilityLabel = "tableView"
-        
+        store.getRepositories { _ in
+            self.tableView.reloadData()
+        }
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.store.repositories.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell", for: indexPath)
+        if let url = self.store.repositories[indexPath.row].htmlURL {
+            cell.textLabel?.text = String(describing: url)
+        }
+        return cell
     }
 
-    // MARK: - Table view data source
- 
-
 }
+
