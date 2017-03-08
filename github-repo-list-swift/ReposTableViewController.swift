@@ -29,7 +29,7 @@ class ReposTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell", for: indexPath)
         if let url = self.store.repositories[indexPath.row].htmlURL {
-            cell.textLabel?.text = String(describing: url)
+            cell.textLabel?.text = String(describing: url) // why would nil coalescing not work here?
         }
         return cell
     }
